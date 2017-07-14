@@ -1,5 +1,8 @@
 # POC 2 pour le Club des Expressions
 
+See the running app here:  
+<https://clubexpressions.github.io/poc2/resources/public/example.html>
+
 ## Installation
 
 * kinto
@@ -32,3 +35,23 @@ page immediately.
 
 Run `lein do clean, with-profile prod compile` to compile an optimised 
 version, and then open `resources/public/example.html` in a browser.
+
+Update `resources/public/js/client.js` in the `gh-pages` branch (you'll have
+to force the `git add` with `-f` since `resources/public/js/` is gitignored).
+
+You can just rebase and push like:
+
+    $ git co gh-pages
+    Switched to branch 'gh-pages'
+    $ lein do clean, with-profile prod compile
+    ...
+    $ git add resources/public/js/client.js -f
+    $ git commit --amend -C HEAD
+    $ git rebase master
+    First, rewinding head to replay your work on top of it...
+    Applying: Add resources/public/js/client.js
+    $ git push origin gh-pages -f
+    ...
+
+Then see it live here:  
+<https://clubexpressions.github.io/poc2/resources/public/example.html>
