@@ -84,7 +84,7 @@ You can just rebase and push like:
     Switched to branch 'gh-pages'
     $ lein do clean, with-profile prod compile
     ...
-    $ git add resources/public/js/client.js -f
+    $ git add resources/public/js/client.js  # -f the first time only
     $ git commit --amend -C HEAD
     $ git rebase master
     First, rewinding head to replay your work on top of it...
