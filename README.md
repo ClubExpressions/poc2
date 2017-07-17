@@ -18,6 +18,34 @@ See the running app here:
 *  resources/public/example.html
 *  src/simple/core.cljs
 
+### Using react-mathjax
+
+From [this blog post](http://blob.tomerweller.com/reagent-import-react-components-from-npm),
+where you'll find where I got the content of `package.json`,
+`webpack.config.js` and `src/js/main.js`.
+
+    $ vim package.json  # or use https://github.com/RyanMcG/lein-npm ?
+    $ npm install
+    $ vim webpack.config.js
+
+I attempted to add `resources` before `public/js` but `lein clean` deleted
+`bundle.js`! Running `npm run build` after `lein clean` was not good either
+(can't remember why).
+
+    $ mkdir src/js
+    $ vim src/js/main.js  # remember to change player -> mathjax or whatever
+    $ sudo npm install -g webpack
+    $ npm run build
+    $ vim project.clj  # to add exclusions of reagent
+    $ vim project.clj  # and add the libs we are trying to use
+                       # see https://clojurescript.org/reference/compiler-options
+                       # for hints about the correct position of :foreign-libs
+    $ lein clean && lein figwheel
+    $ vim src/truc/core.cljs  # beware, there's a typo, use 'r' not 'reagent'
+
+The commit of this addition in the README should be `POC mathjax` and also
+contains all the relevant changes.
+
 ## Run
 
 ### Dev

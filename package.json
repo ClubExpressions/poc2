@@ -1,0 +1,13 @@
+{
+  "name": "react_modules_for_this_cljs_project",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "webpack -p"
+  },
+  "dependencies": {
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "webpack": "3.3.0",
+    "react-mathjax": "0.1.1"
+  }
+}

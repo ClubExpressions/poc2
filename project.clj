@@ -1,7 +1,8 @@
 (defproject simple "0.9.0"
   :dependencies [[org.clojure/clojure        "1.8.0"]
                  [org.clojure/clojurescript  "1.9.227"]
-                 [reagent  "0.6.0-rc"]
+                 [reagent  "0.6.0-rc" :exclusions [cljsjs/react
+                                                   cljsjs/react-dom]]
                  [re-frame "0.9.4"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
@@ -14,11 +15,17 @@
                                       :compiler     {:main "simple.core"
                                                      :asset-path "js"
                                                      :optimizations :none
+                                                     :foreign-libs
+                                                       [{:file "public/js/bundle.js"
+                                                         :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle"]}]
                                                      :source-map true
                                                      :source-map-timestamp true}}}}}
 
              :prod {:cljsbuild
                     {:builds {:client {:compiler    {:optimizations :advanced
+                                                     :foreign-libs
+                                                       [{:file "public/js/bundle.js"
+                                                         :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle"]}]
                                                      :elide-asserts true
                                                      :pretty-print false}}}}}}
 
