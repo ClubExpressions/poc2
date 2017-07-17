@@ -5,9 +5,20 @@ See the running app here:
 
 ## Installation
 
-* kinto
-  * `sudo apt-get install python3-dev`
-  * `sudo pip3 install kinto`
+### kinto
+
+* `sudo apt-get install python3-dev`
+* `sudo pip3 install kinto`
+* for use with PG :
+  * `sudo apt-get install postgresql`
+  * `sudo pip3 install psycopg2 SQLAlchemy zope.sqlalchemy`
+* `mkdir where-kinto-conf-will-be`
+* `cd !$`
+* `kinto init`
+
+#### kinto in memory
+
+* `kinto migrate`
 
 ## Dev notes
 
