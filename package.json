@@ -8,6 +8,7 @@
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "webpack": "3.3.0",
-    "react-mathjax": "0.1.1"
+    "react-mathjax": "0.1.1",
+    "clubexpr": "0.1.1"
   }
 }

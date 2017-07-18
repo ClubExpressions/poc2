@@ -17,7 +17,7 @@
                                                      :optimizations :none
                                                      :foreign-libs
                                                        [{:file "public/js/bundle.js"
-                                                         :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle"]}]
+                                                         :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle" "clubexpr"]}]
                                                      :source-map true
                                                      :source-map-timestamp true}}}}}
 
@@ -25,7 +25,7 @@
                     {:builds {:client {:compiler    {:optimizations :advanced
                                                      :foreign-libs
                                                        [{:file "public/js/bundle.js"
-                                                         :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle"]}]
+                                                         :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle" "clubexpr"]}]
                                                      :elide-asserts true
                                                      :pretty-print false}}}}}}
 

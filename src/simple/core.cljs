@@ -15,7 +15,7 @@
 (rf/reg-event-db              ;; sets up initial application state
   :initialize                 ;; usage:  (dispatch [:initialize])
   (fn [_ _]                   ;; the two parameters are not important here, so use _
-    {:latex-src "2+2"}))
+    {:latex-src "(Somme 2 2)"}))
 
 
 (rf/reg-event-db
@@ -38,9 +38,12 @@
   [src]
   (let [react-mathjax (aget js/window "deps" "react-mathjax")
         ctx (aget react-mathjax "Context")
-        node (aget react-mathjax "Node")]
+        node (aget react-mathjax "Node")
+        clubexpr (aget js/window "deps" "clubexpr")
+        renderLispAsLaTeX (comp (.-renderExprAsLaTeX clubexpr) (.-parse clubexpr))
+        ]
     [:div
-      [:> ctx [:> node {:inline true} src]]]))
+      [:> ctx [:> node {:inline true} (renderLispAsLaTeX src)]]]))
 
 (defn src-input
   []
