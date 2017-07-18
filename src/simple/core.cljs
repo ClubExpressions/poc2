@@ -48,7 +48,7 @@
 (defn src-input
   []
   [:div.color-input
-   "LaTeX code: "
+   "Code Club: "
    [:input {:type "text"
             :value @(rf/subscribe [:latex-src])
             :on-change #(rf/dispatch [:latex-src-change (-> % .-target .-value)])}]])
@@ -56,7 +56,7 @@
 (defn ui
   []
    [:div
-    [:h1 "Hello world, please type some LaTeX in"]
+    [:h1 "POC Club des Expressions"]
     [src-input]
     "Formatted expr: "
     [expr @(rf/subscribe [:latex-src])]])
