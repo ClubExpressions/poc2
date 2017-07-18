@@ -67,6 +67,17 @@ contains all the relevant changes.
     $ lein clean && lein figwheel
     $ vim src/truc/core.cljs  # require and use your package or component
 
+### Simple steps for using a node package like clubexpr thereafter
+
+    $ vim package.json  # just add one line
+    $ npm install
+    $ npm run build
+    $ git add package.json public/js/bundle.js
+    $ git commit -m "Update name_of_the_package version_number"
+    $ stop figwheel
+    $ lein clean && lein figwheel  # maybe hard refresh to be sure
+    $ use the new version
+
 ## Run
 
 ### Dev

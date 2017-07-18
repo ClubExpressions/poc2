@@ -40,7 +40,7 @@
         ctx (aget react-mathjax "Context")
         node (aget react-mathjax "Node")
         clubexpr (aget js/window "deps" "clubexpr")
-        renderLispAsLaTeX (comp (.-renderExprAsLaTeX clubexpr) (.-parse clubexpr))
+        renderLispAsLaTeX (.-renderLispAsLaTeX clubexpr)
         ]
     [:div
       [:> ctx [:> node {:inline true} (renderLispAsLaTeX src)]]]))
