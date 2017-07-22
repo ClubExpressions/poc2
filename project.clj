@@ -22,7 +22,7 @@
                                                      :source-map-timestamp true}}}}}
 
              :prod {:cljsbuild
-                    {:builds {:client {:compiler    {:optimizations :advanced
+                    {:builds {:client {:compiler    {:optimizations :simple
                                                      :foreign-libs
                                                        [{:file "public/js/bundle.js"
                                                          :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle"]}]
