@@ -102,16 +102,17 @@ to force the `git add` with `-f` since `resources/public/js/` is gitignored).
 You can just rebase and push like:
 
     $ git co gh-pages
+    $ git rebase master
     Switched to branch 'gh-pages'
     $ lein do clean, with-profile prod compile
     ...
     $ git add resources/public/js/client.js  # -f the first time only
     $ git commit --amend -C HEAD
-    $ git rebase master
     First, rewinding head to replay your work on top of it...
     Applying: Add resources/public/js/client.js
     $ git push origin gh-pages -f
     ...
+    $ git co master
 
 Then see it live here:  
 <https://clubexpressions.github.io/poc2/resources/public/example.html>
