@@ -67,7 +67,7 @@ contains all the relevant changes.
     $ lein clean && lein figwheel
     $ vim src/truc/core.cljs  # require and use your package or component
 
-### Simple steps for using a node package like clubexpr thereafter
+### Simple steps for updating a node package like clubexpr thereafter
 
     $ vim package.json  # just add one line
     $ npm install
