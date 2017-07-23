@@ -18,11 +18,25 @@
     {:latex-src "(Somme 2 2)"}))
 
 
-(rf/reg-event-db
+(rf/reg-event-fx
   :latex-src-change
-  (fn [db [_ new-value]]
-    (assoc db :latex-src new-value)))
+  (fn [{:keys [db]} [_ new-value]]
+    {:db (assoc db :latex-src new-value)
+     :kinto new-value}))
 
+;; -- Domino 3 - Effects Handlers  --------------------------------------------
+
+(def collec
+  (let [kinto (aget js/window "deps" "kinto")
+        k (new kinto)]
+    (.collection k "history")))
+
+(rf/reg-fx
+   :kinto
+   (fn [value]
+     (.create collec (clj->js {:user-attempt value}))
+     (println (str "kinto fx handler: " value))
+     ))
 
 ;; -- Domino 4 - Query  -------------------------------------------------------
 
