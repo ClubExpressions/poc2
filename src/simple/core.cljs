@@ -19,6 +19,7 @@
   (fn [_ _]                   ;; the two parameters are not important here, so use _
     {:latex-src "(Somme 2 2)"}))
 
+
 (rf/reg-event-fx
   :latex-src-change
   (fn [{:keys [db]} [_ new-value]]
@@ -39,7 +40,6 @@
      (println (str "kinto fx handler: " value))
      ))
 
-
 ;; -- Domino 4 - Query  -------------------------------------------------------
 
 (rf/reg-sub
@@ -58,11 +58,12 @@
         clubexpr (aget js/window "deps" "clubexpr")
         renderLispAsLaTeX (.-renderLispAsLaTeX clubexpr)
         ]
-    [:> ctx [:> node {:inline true} (renderLispAsLaTeX src)]]))
+    [:div
+      [:> ctx [:> node {:inline true} (renderLispAsLaTeX src)]]]))
 
 (defn src-input
   []
-  [:div
+  [:div.color-input
    "Code Club: "
    [:input {:type "text"
             :value @(rf/subscribe [:latex-src])
@@ -74,8 +75,8 @@
     (when false [:pre (with-out-str (pprint @app-db))])
     [:h1 "POC Club des Expressions"]
     [src-input]
-    [:div "Formatted expr: "
-      [expr @(rf/subscribe [:latex-src])]]])
+    "Formatted expr: "
+    [expr @(rf/subscribe [:latex-src])]])
 
 ;; -- Entry Point -------------------------------------------------------------
 
