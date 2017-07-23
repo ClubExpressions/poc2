@@ -1,7 +1,9 @@
 (ns simple.core
   (:require [reagent.core :as reagent]
             [re-frame.core :as rf]
-            [webpack.bundle]))
+            [re-frame.db :refer [app-db]]
+            [webpack.bundle]
+            [cljs.pprint :refer [pprint]]))
 
 ;; A detailed walk-through of this source code is provied in the docs:
 ;; https://github.com/Day8/re-frame/blob/master/docs/CodeWalkthrough.md
@@ -70,6 +72,7 @@
 (defn ui
   []
    [:div
+    (when false [:pre (with-out-str (pprint @app-db))])
     [:h1 "POC Club des Expressions"]
     [src-input]
     "Formatted expr: "
