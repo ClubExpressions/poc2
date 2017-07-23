@@ -57,17 +57,16 @@ I attempted to add `resources` before `public/js` but `lein clean` deleted
 The commit of this addition in the README should be `POC mathjax` and also
 contains all the relevant changes.
 
-### Simple steps for using a node package like clubexpr thereafter
+### Simple steps for adding another node package thereafter
 
     $ vim package.json  # just add one line
     $ npm install
     $ vim src/js/main.js  # add one line
     $ npm run build
-    $ vim project.clj  # add the libs we are trying to use to :foreign-libs
     $ lein clean && lein figwheel
     $ vim src/truc/core.cljs  # require and use your package or component
 
-### Simple steps for updating a node package like clubexpr thereafter
+### Simple steps for updating a node package
 
     $ vim package.json  # just add one line
     $ npm install
