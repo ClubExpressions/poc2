@@ -23,7 +23,7 @@
   :latex-src-change
   (fn [{:keys [db]} [_ new-value]]
     {:db (assoc db :latex-src new-value)
-     :kinto new-value}))
+     :kinto-log-user-attempt new-value}))
 
 ;; -- Domino 3 - Effects Handlers  --------------------------------------------
 
@@ -33,7 +33,7 @@
     (.collection k "history")))
 
 (rf/reg-fx
-   :kinto
+   :kinto-log-user-attempt
    (fn [value]
      (.create collec (clj->js {:user-attempt value}))
      (println (str "kinto fx handler: " value))
