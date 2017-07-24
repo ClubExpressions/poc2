@@ -75,8 +75,8 @@
     (when false [:pre (with-out-str (pprint @app-db))])
     [:h1 "POC Club des Expressions"]
     [src-input]
-    "Formatted expr: "
-    [expr @(rf/subscribe [:latex-src])]])
+    [:div "Formatted expr: "
+      [expr @(rf/subscribe [:latex-src])]]])
 
 ;; -- Entry Point -------------------------------------------------------------
 
