@@ -23,6 +23,7 @@
 (rf/reg-event-fx
   :error
   (fn [_ [_ error]]
+    (println "ERROR!!!1!")
     (println (with-out-str (pprint error)))))
 
 (rf/reg-event-fx
