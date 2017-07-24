@@ -63,8 +63,9 @@
 (rf/reg-fx
    :kinto-get-count
    (fn []
-     [(.. (.list collec) (then #(rf/dispatch [:result-get-count %]))
-                         (catch #(rf/dispatch [:error [:kinto-get-count %]])))]))
+     [(.. (.list collec)
+          (then #(rf/dispatch [:result-get-count %]))
+          (catch #(rf/dispatch [:error [:kinto-get-count %]])))]))
 
 
 ;; -- Domino 4 - Query  -------------------------------------------------------
