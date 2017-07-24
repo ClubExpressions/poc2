@@ -17,14 +17,28 @@
 (rf/reg-event-db              ;; sets up initial application state
   :initialize                 ;; usage:  (dispatch [:initialize])
   (fn [_ _]                   ;; the two parameters are not important here, so use _
-    {:latex-src "(Somme 2 2)"}))
-
+    {:latex-src "(Somme 2 2)"
+     :history-count 0}))
 
 (rf/reg-event-fx
   :latex-src-change
   (fn [{:keys [db]} [_ new-value]]
     {:db (assoc db :latex-src new-value)
      :kinto-log-user-attempt new-value}))
+
+(rf/reg-event-fx
+  :request-history-count
+  (fn [{db :db} _]
+    [{db :db} _]
+    {:kinto-get-count nil
+     :db db}))  ; we could have set a 'loading?' flag in app-db as in the docs
+
+(rf/reg-event-db
+  :result-get-count
+  (fn [db [_ value]]
+    (let [data (:data (js->clj value :keywordize-keys true))]
+      (assoc db :history-count (count data)))))
+
 
 ;; -- Domino 3 - Effects Handlers  --------------------------------------------
 
@@ -40,12 +54,22 @@
      (println (str "kinto fx handler: " value))
      ))
 
+(rf/reg-fx
+   :kinto-get-count
+   (fn []
+    [(. (.list collec) (then #(rf/dispatch [:result-get-count %])))]))
+
 ;; -- Domino 4 - Query  -------------------------------------------------------
 
 (rf/reg-sub
   :latex-src
   (fn [db _]
     (:latex-src db)))
+
+(rf/reg-sub
+  :history-count
+  (fn [db _]
+    (:history-count db)))
 
 
 ;; -- Domino 5 - View Functions ----------------------------------------------
@@ -69,6 +93,12 @@
             :value @(rf/subscribe [:latex-src])
             :on-change #(rf/dispatch [:latex-src-change (-> % .-target .-value)])}]])
 
+(defn request-history-count-button
+  []
+  [:button
+     {:on-click #(rf/dispatch [:request-history-count])}
+     "Update history count"])
+
 (defn ui
   []
    [:div
@@ -76,7 +106,11 @@
     [:h1 "POC Club des Expressions"]
     [src-input]
     [:div "Formatted expr: "
-      [expr @(rf/subscribe [:latex-src])]]])
+      [expr @(rf/subscribe [:latex-src])]]
+    [:div "History count: "
+      @(rf/subscribe [:history-count])]
+    [request-history-count-button]
+    ])
 
 ;; -- Entry Point -------------------------------------------------------------
 
