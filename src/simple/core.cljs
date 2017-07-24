@@ -21,6 +21,11 @@
      :history-count 0}))
 
 (rf/reg-event-fx
+  :error
+  (fn [_ [_ error]]
+    (println (with-out-str (pprint error)))))
+
+(rf/reg-event-fx
   :latex-src-change
   (fn [{:keys [db]} [_ new-value]]
     {:db (assoc db :latex-src new-value)
@@ -57,8 +62,9 @@
 (rf/reg-fx
    :kinto-get-count
    (fn []
-    ; there is also a 'catch' that we could have wrapped arount the then
-    [(. (.list collec) (then #(rf/dispatch [:result-get-count %])))]))
+     [(.. (.list collec) (then #(rf/dispatch [:result-get-count %]))
+                         (catch #(rf/dispatch [:error "kinto-get-count"])))]))
+
 
 ;; -- Domino 4 - Query  -------------------------------------------------------
 
