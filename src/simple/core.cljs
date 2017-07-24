@@ -22,8 +22,8 @@
 
 (rf/reg-event-fx
   :error
-  (fn [_ [_ error]]
-    (println "ERROR!!!1!")
+  (fn [_ [_ [kw error]]]
+    (println (str "ERROR!!!1! in " kw))
     (println (with-out-str (pprint error)))))
 
 (rf/reg-event-fx
@@ -64,7 +64,7 @@
    :kinto-get-count
    (fn []
      [(.. (.list collec) (then #(rf/dispatch [:result-get-count %]))
-                         (catch #(rf/dispatch [:error "kinto-get-count"])))]))
+                         (catch #(rf/dispatch [:error [:kinto-get-count %]])))]))
 
 
 ;; -- Domino 4 - Query  -------------------------------------------------------
