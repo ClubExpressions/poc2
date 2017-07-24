@@ -57,6 +57,7 @@
 (rf/reg-fx
    :kinto-get-count
    (fn []
+    ; there is also a 'catch' that we could have wrapped arount the then
     [(. (.list collec) (then #(rf/dispatch [:result-get-count %])))]))
 
 ;; -- Domino 4 - Query  -------------------------------------------------------
