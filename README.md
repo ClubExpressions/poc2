@@ -92,14 +92,15 @@ page immediately.
 
 ### Prod
 
-Run `lein do clean, with-profile prod compile` to compile an optimised 
-version, and then open `resources/public/example.html` in a browser.
 
 Update `resources/public/js/client.js` in the `gh-pages` branch (you'll have
 to force the `git add` with `-f` since `resources/public/js/` is gitignored).
 
 You can just rebase and push like:
 
+    $ # kill lein dev
+    $ lein do clean, with-profile prod compile
+    $ # check at /path_to_prj/resources/public/index.html` in a browser.
     $ git co gh-pages
     $ git co .  # this is because client.js was ignored
     $ git rebase master
