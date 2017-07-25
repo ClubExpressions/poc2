@@ -1,7 +1,7 @@
 # POC 2 pour le Club des Expressions
 
 See the running app here:  
-<https://clubexpressions.github.io/poc2/resources/public/example.html>
+<https://clubexpressions.github.io/poc2/resources/public/>
 
 ## Installation
 
@@ -26,7 +26,7 @@ See the running app here:
 
 *  project.clj
 *  resources/public/example.css
-*  resources/public/example.html
+*  resources/public/index.html (was example.html)
 *  src/simple/core.cljs
 
 ### Using react-mathjax
@@ -84,7 +84,7 @@ contains all the relevant changes.
 1. `cd` to the root of this project (where this README exists)
 2. run "`lein do clean, figwheel`"  to compile the app and start up
    figwheel hot-reloading, 
-3. open `http://localhost:3449/example.html` to see the app
+3. open `http://localhost:3449/` to see the app
 
 While step 2 is running, any changes you make to the ClojureScript 
 source files (in `src`) will be re-compiled and reflected in the running 
