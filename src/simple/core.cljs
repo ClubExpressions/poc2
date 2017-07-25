@@ -44,7 +44,7 @@
 (rf/reg-event-fx
   :sync-history
   (fn [{db :db} _]
-    {:kinto-sync nil
+    {:sync-history nil
      :db db}))  ; we could have set a 'syncing?' flag in app-db as in the docs
 
 (rf/reg-event-db
@@ -86,7 +86,7 @@
   (into {} (for [k (.keys js/Object x)] [k (getValueByKeys x k)])))
 
 (rf/reg-fx
-   :kinto-sync
+   :sync-history
    (fn []
     [(.. (.sync collec sync-options)
          (then #(do (print "Sync returned:")
