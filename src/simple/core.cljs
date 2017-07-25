@@ -6,6 +6,8 @@
             [webpack.bundle]
             [cljs.pprint :refer [pprint]]))
 
+(enable-console-print!)
+
 ;; A detailed walk-through of this source code is provied in the docs:
 ;; https://github.com/Day8/re-frame/blob/master/docs/CodeWalkthrough.md
 
