@@ -49,6 +49,11 @@
     {:sync-history nil
      :db db}))  ; we could have set a 'syncing?' flag in app-db as in the docs
 
+(rf/reg-event-fx
+  :kinto-reset-sync-status
+  (fn []
+    {:kinto-reset-sync-status nil}))
+
 (rf/reg-event-db
   :result-get-count
   (fn [db [_ value]]
@@ -88,13 +93,29 @@
   [x]
   (into {} (for [k (.keys js/Object x)] [k (getValueByKeys x k)])))
 
+(def kinto-network-error "NetworkError when attempting to fetch resource.")
+(def kinto-flushed-error "Server has been flushed.")
+
 (rf/reg-fx
    :sync-history
    (fn []
     [(.. (.sync collec sync-options)
          (then #(do (print "Sync returned:")
                     (pprint (jsx->clj %))))
-         (catch #(rf/dispatch [:error [:kinto-sync %]])))]))
+         (catch #(let [msg (.-message %)]
+                   (cond
+                     (= msg kinto-network-error)
+                       (rf/dispatch [:error [:kinto-network-error %]])
+                     (= msg kinto-flushed-error)
+                       (rf/dispatch [:kinto-reset-sync-status])
+                     :else (rf/dispatch [:error [:kinto-sync %]])))))]))
+
+(rf/reg-fx
+   :kinto-reset-sync-status
+   (fn []
+     [(.. (.resetSyncStatus collec)
+          (then #(rf/dispatch [:sync-history]))
+          (catch #(rf/dispatch [:error [:kinto-reset-sync-status %]])))]))
 
 
 ;; -- Domino 4 - Query  -------------------------------------------------------
