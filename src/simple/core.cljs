@@ -38,14 +38,12 @@
 (rf/reg-event-fx
   :request-history-count
   (fn [{db :db} _]
-    [{db :db} _]
     {:kinto-get-count nil
      :db db}))  ; we could have set a 'loading?' flag in app-db as in the docs
 
 (rf/reg-event-fx
   :sync-history
   (fn [{db :db} _]
-    [{db :db} _]
     {:kinto-sync nil
      :db db}))  ; we could have set a 'syncing?' flag in app-db as in the docs
 
