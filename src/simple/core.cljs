@@ -2,6 +2,7 @@
   (:require [reagent.core :as reagent]
             [re-frame.core :as rf]
             [re-frame.db :refer [app-db]]
+            [goog.object :refer [getValueByKeys]]
             [webpack.bundle]
             [cljs.pprint :refer [pprint]]))
 
@@ -49,7 +50,7 @@
 ;; -- Domino 3 - Effects Handlers  --------------------------------------------
 
 (def collec
-  (let [kinto (aget js/window "deps" "kinto")
+  (let [kinto (getValueByKeys js/window "deps" "kinto")
         k (new kinto)]
     (.collection k "history")))
 
@@ -85,10 +86,10 @@
 
 (defn expr
   [src]
-  (let [react-mathjax (aget js/window "deps" "react-mathjax")
-        ctx (aget react-mathjax "Context")
-        node (aget react-mathjax "Node")
-        clubexpr (aget js/window "deps" "clubexpr")
+  (let [react-mathjax (getValueByKeys js/window "deps" "react-mathjax")
+        ctx (getValueByKeys react-mathjax "Context")
+        node (getValueByKeys react-mathjax "Node")
+        clubexpr (getValueByKeys js/window "deps" "clubexpr")
         renderLispAsLaTeX (.-renderLispAsLaTeX clubexpr)
         ]
     [:div
