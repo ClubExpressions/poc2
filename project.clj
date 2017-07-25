@@ -23,6 +23,7 @@
 
              :prod {:cljsbuild
                     {:builds {:client {:compiler    {:optimizations :simple
+                                                     :closure-defines {goog.DEBUG false}
                                                      :foreign-libs
                                                        [{:file "public/js/bundle.js"
                                                          :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle"]}]
