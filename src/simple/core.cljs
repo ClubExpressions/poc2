@@ -40,6 +40,13 @@
     {:kinto-get-count nil
      :db db}))  ; we could have set a 'loading?' flag in app-db as in the docs
 
+(rf/reg-event-fx
+  :sync-history
+  (fn [{db :db} _]
+    [{db :db} _]
+    {:kinto-sync nil
+     :db db}))  ; we could have set a 'syncing?' flag in app-db as in the docs
+
 (rf/reg-event-db
   :result-get-count
   (fn [db [_ value]]
@@ -49,6 +56,11 @@
 
 ;; -- Domino 3 - Effects Handlers  --------------------------------------------
 
+(def sync-options
+  (let [b64 (js/window.btoa "user:pass")
+        url "https://kinto.dev.mozaws.net/v1"]
+    (clj->js {:remote url
+              :headers {:Authorization (str "Basic " b64)}})))
 (def collec
   (let [kinto (getValueByKeys js/window "deps" "kinto")
         k (new kinto)]
@@ -67,6 +79,19 @@
      [(.. (.list collec)
           (then #(rf/dispatch [:result-get-count %]))
           (catch #(rf/dispatch [:error [:kinto-get-count %]])))]))
+
+; https://stackoverflow.com/questions/32467299/clojurescript-convert-arbitrary-javascript-object-to-clojure-script-map
+(defn jsx->clj
+  [x]
+  (into {} (for [k (.keys js/Object x)] [k (getValueByKeys x k)])))
+
+(rf/reg-fx
+   :kinto-sync
+   (fn []
+    [(.. (.sync collec sync-options)
+         (then #(do (print "Sync returned:")
+                    (pprint (jsx->clj %))))
+         (catch #(rf/dispatch [:error [:kinto-sync %]])))]))
 
 
 ;; -- Domino 4 - Query  -------------------------------------------------------
@@ -109,6 +134,12 @@
      {:on-click #(rf/dispatch [:request-history-count])}
      "Update history count"])
 
+(defn sync-history-button
+  []
+  [:button
+     {:on-click #(rf/dispatch [:sync-history])}
+     "Sync history"])
+
 (defn ui
   []
    [:div
@@ -120,6 +151,7 @@
     [:div "History count: "
       @(rf/subscribe [:history-count])]
     [request-history-count-button]
+    [sync-history-button]
     ])
 
 ;; -- Entry Point -------------------------------------------------------------
