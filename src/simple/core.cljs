@@ -6,6 +6,8 @@
             [webpack.bundle]
             [cljs.pprint :refer [pprint]]))
 
+(def debug?
+  ^boolean goog.DEBUG)
 (enable-console-print!)
 
 ;; A detailed walk-through of this source code is provied in the docs:
@@ -58,7 +60,8 @@
 
 (def sync-options
   (let [b64 (js/window.btoa "user:pass")
-        url "https://kinto.dev.mozaws.net/v1"]
+        url (if debug? "http://localhost:8887/v1"
+                       "https://kinto.dev.mozaws.net/v1")] ; a real one soon
     (clj->js {:remote url
               :headers {:Authorization (str "Basic " b64)}})))
 (def collec
