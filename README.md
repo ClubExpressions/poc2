@@ -1,24 +1,94 @@
-# POC 2 pour le Club des Expressions
+# Second (and last) POC for the Club des Expressions
 
 See the running app here:  
 <https://clubexpressions.github.io/poc2/resources/public/>
 
+## Technical stack
+
+### Overview
+
+* We build an [SPA](https://en.wikipedia.org/wiki/Single-page_application)
+  (see [this article](https://johnpapa.net/pageinspa/) for a demythification)
+* using [re-frame](https://github.com/Day8/re-frame/) which is a
+  * [ClojureScript](https://clojurescript.org/), which is
+    * [Clojure](https://clojure.org/) (a clever
+      [Lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language))
+      on the [JVM](https://en.wikipedia.org/wiki/Java_virtual_machine))
+    * that compiles to [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+      (the language animating browsers)
+  * [framework](https://en.wikipedia.org/wiki/Software_framework) built around
+  * [Reagent](https://github.com/reagent-project/reagent) which is a
+    ClojureScript interface to
+    * [React](https://facebook.github.io/react/) using the
+    * [Hiccup](https://github.com/weavejester/hiccup)-like syntax.
+  * We have the powers of all the packages available at
+    [npm](http://npmjs.com/), a huge software repository for JavaScript.
+* Authentication thanks to [Auth0](http://auth0.com/).
+* Persistency thanks to [Kinto](kinto.readthedocs.io/).
+
+[Figwheel](https://github.com/bhauman/lein-figwheel) allows us to live code.
+
+### Details and POC TODOs
+
+* Integration of npm packages in ClojureScript (done
+  [this way](http://blob.tomerweller.com/reagent-import-react-components-from-npm)
+  but [there may be a cleaner way](https://clojurescript.org/news/2017-07-12-clojurescript-is-not-an-island-integrating-node-modules))
+  * [react-mathjax](https://www.npmjs.com/package/react-mathjax)
+    (math typesetting in the browser)
+  * [clubexpr](https://www.npmjs.com/package/clubexpr) (math expressions)
+  * [Kinto](https://www.npmjs.com/package/kinto) (persistency)
+* Modules that are planned to be used:
+  * [Auth0](https://www.npmjs.com/package/auth0) (authentication)
+  * [Bootstrap](https://www.npmjs.com/package/bootstrap) (nice UI in the browser)
+  * [CodeMirror](https://www.npmjs.com/package/react-codemirror) (text editor)
+  * [Tempura](https://github.com/ptaoussanis/tempura) (i18n)
+
 ## Installation
 
 ### kinto
+
+#### Client side
+
+We use the official npm package [kinto](https://www.npmjs.com/package/kinto)
+(instead of the other official
+[kinto-http](https://www.npmjs.com/package/kinto-http)).
+
+#### Generic install
 
 * `sudo apt-get install python3-dev`
 * `sudo pip3 install kinto`
 * for use with PG :
   * `sudo apt-get install postgresql`
   * `sudo pip3 install psycopg2 SQLAlchemy zope.sqlalchemy`
+
+#### Local kinto
+
+There's a `kinto.ini` in the repo, just do `kinto start --ini kinto.ini`.
+
+#### Official test instance
+
+* /!\ sur la github page: https, donc pas possible de sync avec Chrome
+
+#### Prod kinto
+
 * `mkdir where-kinto-conf-will-be`
 * `cd !$`
 * `kinto init`
-
-#### kinto in memory
-
+* PG is running
 * `kinto migrate`
+
+#### Kinto admin (like phpMyAdmin)
+
+[Project page](https://github.com/Kinto/kinto-admin)
+
+* first instructions (create a React app)
+  [don't work](https://github.com/Kinto/kinto-admin/issues/446)
+* I just did:
+  * `git clone https://github.com/Kinto/kinto-admin.git`
+  * `cd kinto-admin`
+  * `npm install`
+  * `npm start`
+  * then had a look at <http://localhost:3000>.
 
 ## Dev notes
 
