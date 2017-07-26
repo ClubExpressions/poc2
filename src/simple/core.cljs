@@ -21,9 +21,11 @@
 
 (rf/reg-event-db              ;; sets up initial application state
   :initialize                 ;; usage:  (dispatch [:initialize])
-  (fn [_ _]                   ;; the two parameters are not important here, so use _
-    {:latex-src "(Somme 2 2)"
-     :history-count 0}))
+  (fn [db _]                  ;; the two parameters are not important here, so use _
+    (if (empty? db)
+      {:latex-src "(Somme 2 2)"
+       :history-count 0}
+      db)))
 
 (rf/reg-event-fx
   :error
