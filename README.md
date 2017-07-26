@@ -99,7 +99,10 @@ There's a `kinto.ini` in the repo, just do `kinto start --ini kinto.ini`.
 *  resources/public/index.html (was example.html)
 *  src/simple/core.cljs
 
-### Using react-mathjax
+### Using an npm module in the ClojureScript build
+
+The POC was done with
+[react-mathjax](https://www.npmjs.com/package/react-mathjax).
 
 From [this blog post](http://blob.tomerweller.com/reagent-import-react-components-from-npm),
 where you'll find where I got the content of `package.json`,
