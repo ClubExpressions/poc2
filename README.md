@@ -71,6 +71,10 @@ There's a `kinto.ini` in the repo, just do `kinto start --ini kinto.ini`.
 
 #### Prod kinto
 
+Attempts to use [kinto-alwaysdata](https://github.com/kinto/kinto-alwaysdata),
+but encountered
+[issues](https://github.com/Kinto/kinto-alwaysdata/issues/created_by/grahack).
+
 * `mkdir where-kinto-conf-will-be`
 * `cd !$`
 * `kinto init`
