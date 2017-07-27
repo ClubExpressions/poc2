@@ -34,6 +34,11 @@
     (println (with-out-str (pprint error)))))
 
 (rf/reg-event-fx
+  :login
+  (fn []
+    {:login nil}))
+
+(rf/reg-event-fx
   :latex-src-change
   (fn [{:keys [db]} [_ new-value]]
     {:db (assoc db :latex-src new-value)
@@ -64,6 +69,20 @@
 
 
 ;; -- Domino 3 - Effects Handlers  --------------------------------------------
+
+(def webauth
+  (let [auth0 (getValueByKeys js/window "deps" "auth0")
+        opts (clj->js {:domain "clubexpr.eu.auth0.com"
+                       :clientID "QKq48jNZqQ84VQALSZEABkuUnM74uHUa"
+                       :responseType "token id_token"
+                       :redirectUri (str (.-location js/window))
+                       })]
+    (new auth0.WebAuth opts)))
+
+(rf/reg-fx
+   :login
+   (fn [_]
+     (.authorize webauth)))
 
 (def sync-options
   (let [b64 (js/window.btoa "user:pass")
@@ -135,6 +154,12 @@
 
 ;; -- Domino 5 - View Functions ----------------------------------------------
 
+(defn login-link
+  []
+  [:a
+     {:on-click #(rf/dispatch [:login])}
+     "Login"])
+
 (defn expr
   [src]
   (let [react-mathjax (getValueByKeys js/window "deps" "react-mathjax")
@@ -170,6 +195,7 @@
   []
    [:div
     (when false [:pre (with-out-str (pprint @app-db))])
+    [login-link]
     [:h1 "POC Club des Expressions"]
     [src-input]
     [:div "Formatted expr: "
