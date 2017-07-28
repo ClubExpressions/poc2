@@ -159,13 +159,6 @@
 (def bs-row  (getValueByKeys react-bootstrap "Row"))
 (def bs-col  (getValueByKeys react-bootstrap "Col"))
 
-(defn test-bootstrap
-  [txt]
-  [:div
-    [:> bs-grid [:> bs-row
-                  [:> bs-col {:xs 6 :md 6} "bla"]
-                  [:> bs-col {:xs 6 :md 6} "bla"]]]])
-
 (defn login-link
   []
   [:a
@@ -207,32 +200,37 @@
   []
    [:div.container-fluid
     (when false [:pre (with-out-str (pprint @app-db))])
-    [login-link]
-    [:h1 "POC Club des Expressions"]
-    [src-input]
-    [:div "Formatted expr: "
-      [expr @(rf/subscribe [:latex-src])]]
-    [:div "History count: "
-      @(rf/subscribe [:history-count])]
-    [request-history-count-button]
-    [sync-history-button]
-    [test-bootstrap]
-    [:h2 "Instructions et commentaires"]
-    [:p "Le lien « Login » amène l’utilisateur à la page de connexion. "
-        "Au retour, rien de spécial ne se passe, à part dans l’URL."]
-    [:p "Chaque modification du champs « Code Club » provoque :"]
-    [:ol
-     [:li "la mise à jour de l’expression mathématique (Formatted expr) ;"]
-     [:li "un enregistrement de la valeur du champs dans le navigateur "
-          "qui va constituer dans ce POC ce qu’on appelera « l’historique » ;"]]
-    [:p "Le compteur « History count » ne mesure le nombre de lignes dans "
-        "l’historique que si on clique sur le bouton « Update… »."]
-    [:p "Le bouton « Update history count » permet de mettre à jour le "
-        "compteur, en allant lire l’historique dans le navigateur."]
-    [:p "Le bouton « Sync history » permet de fusionner l’historique local "
-        "(dans le navigateur) et l’historique sur le serveur. C’est une "
-        "fusion dans les deux sens."]
-    ])
+    [:div.pull-right [login-link]]
+    [:> bs-grid
+      [:> bs-row
+        [:> bs-col {:xs 6 :md 6}
+          [:h1 "POC Club des Expressions"]
+          [src-input]
+          [:div "Formatted expr: "
+            [expr @(rf/subscribe [:latex-src])]]
+          [:div "History count: "
+            @(rf/subscribe [:history-count])]
+          [request-history-count-button]
+          [sync-history-button]]
+        [:> bs-col {:xs 6 :md 6}
+          [:h2 "Instructions et commentaires"]
+          [:p "Le lien « Login » amène l’utilisateur à la page de connexion. "
+              "Au retour, rien de spécial ne se passe, à part dans l’URL."]
+          [:p "Chaque modification du champs « Code Club » provoque :"]
+          [:ol
+           [:li "la mise à jour de l’expression mathématique "
+                "(Formatted expr) ;"]
+           [:li "un enregistrement de la valeur du champs dans le navigateur "
+                "qui va constituer dans ce POC ce qu’on appelera "
+                "« l’historique » ;"]]
+          [:p "Le compteur « History count » ne mesure le nombre de lignes "
+              "dans l’historique que si on clique sur le bouton « Update… »."]
+          [:p "Le bouton « Update history count » permet de mettre à jour le "
+              "compteur, en allant lire l’historique dans le navigateur."]
+          [:p "Le bouton « Sync history » permet de fusionner l’historique "
+              "local (dans le navigateur) et l’historique sur le serveur. "
+              "C’est une fusion dans les deux sens."]]
+    ]]])
 
 ;; -- Entry Point -------------------------------------------------------------
 
