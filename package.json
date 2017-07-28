@@ -7,6 +7,7 @@
   "dependencies": {
     "react": "15.6.1",
     "react-dom": "15.6.1",
+    "react-bootstrap": "0.31.1",
     "webpack": "3.3.0",
     "kinto": "9.0.2",
     "auth0-js": "8.8.0",

@@ -154,6 +154,18 @@
 
 ;; -- Domino 5 - View Functions ----------------------------------------------
 
+(def react-bootstrap (getValueByKeys js/window "deps" "react-bootstrap"))
+(def bs-grid (getValueByKeys react-bootstrap "Grid"))
+(def bs-row  (getValueByKeys react-bootstrap "Row"))
+(def bs-col  (getValueByKeys react-bootstrap "Col"))
+
+(defn test-bootstrap
+  [txt]
+  [:div
+    [:> bs-grid [:> bs-row
+                  [:> bs-col {:xs 6 :md 6} "bla"]
+                  [:> bs-col {:xs 6 :md 6} "bla"]]]])
+
 (defn login-link
   []
   [:a
@@ -193,7 +205,7 @@
 
 (defn ui
   []
-   [:div
+   [:div.container-fluid
     (when false [:pre (with-out-str (pprint @app-db))])
     [login-link]
     [:h1 "POC Club des Expressions"]
@@ -204,6 +216,7 @@
       @(rf/subscribe [:history-count])]
     [request-history-count-button]
     [sync-history-button]
+    [test-bootstrap]
     [:h2 "Instructions et commentaires"]
     [:p "Le lien « Login » amène l’utilisateur à la page de connexion. "
         "Au retour, rien de spécial ne se passe, à part dans l’URL."]
