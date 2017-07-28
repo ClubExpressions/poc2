@@ -44,17 +44,50 @@ See the running app here:
   * [Bootstrap](https://www.npmjs.com/package/bootstrap) (nice UI in the browser)
   * [Tempura](https://github.com/ptaoussanis/tempura) (i18n)
 
-## Installation
+## Dev setup
+
+### Leiningen (the command is lein)
+
+Install the Clojure/ClojureScript package manager, build frontend…
+
+Install as told at [leiningen.org/](https://leiningen.org/). Yes, it a single
+script which, when run, will install everything it needs..
+
+It reads the `project.clj` lying at the root dir of the project.
+
+### Get the source
+
+`git clone git@github.com:ClubExpressions/poc2.git`
+
+### Dev build and source watch
+
+1. `cd` to the root of this project (where this README exists)
+2. run `lein do clean, figwheel`  to compile the app and start up
+   figwheel hot-reloading,
+3. open `http://localhost:3449/` to see the app
+
+While step 2 is running, any changes you make to the ClojureScript
+source files (in `src`) will be re-compiled and reflected in the running
+page immediately.
 
 ### kinto
 
-#### Client side
-
-We use the official npm package [kinto](https://www.npmjs.com/package/kinto)
-(instead of the other official
+Client side, we use the official npm package
+[kinto](https://www.npmjs.com/package/kinto) (instead of the other official
 [kinto-http](https://www.npmjs.com/package/kinto-http)).
 
-#### Generic install
+The dev build points to <http://localhost:8887/v1> and the prod build to
+<https://kinto.dev.mozaws.net/v1> (thanks to
+
+    :closure-defines {goog.DEBUG false}
+
+in `project.clj` which value is in turn stored in the `debug?` var.
+
+Our own instance will be live
+[soonish](https://github.com/Kinto/kinto-alwaysdata/issues/created_by/grahack).
+Some notes taken below.
+
+#### General instructions to install the Kinto server
 
 * `sudo apt-get install python3-dev`
 * `sudo pip3 install kinto`
@@ -68,7 +101,9 @@ There's a `kinto.ini` in the repo, just do `kinto start --ini kinto.ini`.
 
 #### Official test instance
 
-* /!\ sur la github page: https, donc pas possible de sync avec Chrome
+* Everything works ok with Firefox.
+* /!\ Our Github page use https, the kinto test instance too, but Chrome
+may complain about security issues.
 
 #### Prod kinto
 
@@ -96,13 +131,6 @@ but encountered
   * then had a look at <http://localhost:3000>.
 
 ## Dev notes
-
-### Base files from the re-frame tutorial
-
-*  project.clj
-*  resources/public/example.css
-*  resources/public/index.html (was example.html)
-*  src/simple/core.cljs
 
 ### Using an npm module in the ClojureScript build
 
@@ -155,24 +183,11 @@ contains all the relevant changes.
     $ lein clean && lein figwheel  # maybe hard refresh to be sure
     $ use the new version
 
-## Run
+## Prod build
 
-### Dev
-
-1. `cd` to the root of this project (where this README exists)
-2. run "`lein do clean, figwheel`"  to compile the app and start up
-   figwheel hot-reloading, 
-3. open `http://localhost:3449/` to see the app
-
-While step 2 is running, any changes you make to the ClojureScript 
-source files (in `src`) will be re-compiled and reflected in the running 
-page immediately.
-
-### Prod
-
-
-Update `resources/public/js/client.js` in the `gh-pages` branch (you'll have
-to force the `git add` with `-f` since `resources/public/js/` is gitignored).
+The idea is to build a prod version (`:prod` in `project.clj`) and
+push the new `client.js` to the Github pages. All other maybe useless files
+(.cljs) will be available too on the Github pages.
 
 You can just rebase and push like:
 
