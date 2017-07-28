@@ -38,10 +38,11 @@ See the running app here:
   * [clubexpr](https://www.npmjs.com/package/clubexpr) (math expressions)
   * [Kinto](https://www.npmjs.com/package/kinto) (persistency)
   * [Auth0](https://www.npmjs.com/package/auth0) (authentication)
+  * [React-Bootstrap](https://www.npmjs.com/package/react-bootstrap)
+    instead of just the `bootstrap` package (nice UI in the browser)
 * Modules that caused problems (there is a branch for the attempt)
   * [CodeMirror](https://www.npmjs.com/package/react-codemirror) (text editor)
 * Modules that are planned to be used:
-  * [Bootstrap](https://www.npmjs.com/package/bootstrap) (nice UI in the browser)
   * [Tempura](https://github.com/ptaoussanis/tempura) (i18n)
 
 ## Dev setup
