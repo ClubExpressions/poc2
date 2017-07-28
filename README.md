@@ -195,12 +195,12 @@ You can just rebase and push like:
     $ lein do clean, with-profile prod compile
     $ # check at /path_to_prj/resources/public/index.html` in a browser.
     $ git co gh-pages
-    $ git co .  # this is because client.js was ignored
+    $ git co .  # may be needed because client.js was ignored
     $ git rebase master
     Switched to branch 'gh-pages'
-    $ lein do clean, with-profile prod compile
+    $ lein do clean, with-profile prod compile  # again
     ...
-    $ git add resources/public/js/client.js  # -f the first time only
+    $ git add -u
     $ git commit --amend -C HEAD
     First, rewinding head to replay your work on top of it...
     Applying: Add resources/public/js/client.js
