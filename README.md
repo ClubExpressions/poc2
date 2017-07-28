@@ -81,7 +81,7 @@ The dev build points to <http://localhost:8887/v1> and the prod build to
 
     :closure-defines {goog.DEBUG false}
 
-in `project.clj` which value is in turn stored in the `debug?` var.
+in `project.clj` whose value is in turn stored in the `debug?` var).
 
 Our own instance will be live
 [soonish](https://github.com/Kinto/kinto-alwaysdata/issues/created_by/grahack).
