@@ -30,17 +30,18 @@ See the running app here:
 
 ### Details and POC TODOs
 
-* Integration of npm packages in ClojureScript (done
+* Working integration of npm packages in ClojureScript (done
   [this way](http://blob.tomerweller.com/reagent-import-react-components-from-npm)
   but [there may be a cleaner way](https://clojurescript.org/news/2017-07-12-clojurescript-is-not-an-island-integrating-node-modules))
   * [react-mathjax](https://www.npmjs.com/package/react-mathjax)
     (math typesetting in the browser)
   * [clubexpr](https://www.npmjs.com/package/clubexpr) (math expressions)
   * [Kinto](https://www.npmjs.com/package/kinto) (persistency)
-* Modules that are planned to be used:
   * [Auth0](https://www.npmjs.com/package/auth0) (authentication)
-  * [Bootstrap](https://www.npmjs.com/package/bootstrap) (nice UI in the browser)
+* Modules that caused problems (there is a branch for the attempt)
   * [CodeMirror](https://www.npmjs.com/package/react-codemirror) (text editor)
+* Modules that are planned to be used:
+  * [Bootstrap](https://www.npmjs.com/package/bootstrap) (nice UI in the browser)
   * [Tempura](https://github.com/ptaoussanis/tempura) (i18n)
 
 ## Installation
