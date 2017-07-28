@@ -51,7 +51,7 @@ See the running app here:
 Install the Clojure/ClojureScript package manager, build frontend…
 
 Install as told at [leiningen.org/](https://leiningen.org/). Yes, it a single
-script which, when run, will install everything it needs..
+script which, when run, will install everything it needs.
 
 It reads the `project.clj` lying at the root dir of the project.
 
