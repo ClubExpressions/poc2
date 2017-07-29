@@ -161,8 +161,7 @@
 
 (defn login-link
   []
-  [:a
-     {:on-click #(rf/dispatch [:login])}
+  [:a {:on-click #(rf/dispatch [:login])}
      "Login"])
 
 (defn expr
