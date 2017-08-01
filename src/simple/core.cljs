@@ -22,6 +22,7 @@
 (rf/reg-event-db              ;; sets up initial application state
   :initialize                 ;; usage:  (dispatch [:initialize])
   (fn [db _]                  ;; the two parameters are not important here, so use _
+    ;(if true
     (if (empty? db)
       {:latex-src "(Somme 2 2)"
        :history-count 0}
