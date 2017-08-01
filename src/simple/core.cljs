@@ -24,7 +24,8 @@
   (fn [db _]                  ;; the two parameters are not important here, so use _
     ;(if true
     (if (empty? db)
-      {:latex-src "(Somme 2 2)"
+      {:authenticated false
+       :latex-src "(Somme 2 2)"
        :history-count 0}
       db)))
 
@@ -143,6 +144,11 @@
 ;; -- Domino 4 - Query  -------------------------------------------------------
 
 (rf/reg-sub
+  :authenticated
+  (fn [db _]
+    (:authenticated db)))
+
+(rf/reg-sub
   :latex-src
   (fn [db _]
     (:latex-src db)))
@@ -164,6 +170,11 @@
   []
   [:a {:on-click #(rf/dispatch [:login])}
      "Login"])
+
+(defn logout-link
+  []
+  [:a {:on-click #(rf/dispatch [:logout])}
+     "Logout"])
 
 (defn expr
   [src]
@@ -200,7 +211,8 @@
   []
    [:div.container-fluid
     (when false [:pre (with-out-str (pprint @app-db))])
-    [:div.pull-right [login-link]]
+    [:div.pull-right
+      (if @(rf/subscribe [:authenticated]) [logout-link] [login-link])]
     [:> bs-grid
       [:> bs-row
         [:> bs-col {:xs 6 :md 6}
