@@ -35,8 +35,8 @@
 
 (rf/reg-event-fx
   :login
-  (fn []
-    {:login nil}))
+  (fn [{:keys [db]} []]
+    {:db db :login nil}))
 
 (rf/reg-event-fx
   :latex-src-change
