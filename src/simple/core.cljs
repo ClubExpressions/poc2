@@ -60,8 +60,10 @@
           array (filter (complement #(some #{%} ["&" "=" ""]))
                   (string/split after-qmark #"(&|=)"))
           query-params (keywordize-keys (apply hash-map array))
+          new-db (assoc db :current-page page)
+          cofx (if (= :auth page) {:auth query-params} {})
           ]
-      {:db (assoc db :current-page page)})))
+      (merge {:db new-db} cofx))))
 
 (rf/reg-event-fx
   :login
@@ -105,7 +107,7 @@
         opts (clj->js {:domain "clubexpr.eu.auth0.com"
                        :clientID "QKq48jNZqQ84VQALSZEABkuUnM74uHUa"
                        :responseType "token id_token"
-                       :redirectUri (str (.-location js/window))
+                       :redirectUri (str (.-location js/window) "#/auth")
                        })]
     (new auth0.WebAuth opts)))
 
@@ -113,6 +115,11 @@
    :login
    (fn [_]
      (.authorize webauth)))
+
+(rf/reg-fx
+   :auth
+   (fn [query-params]
+    (println (with-out-str (pprint query-params)))))
 
 (def sync-options
   (let [b64 (js/window.btoa "user:pass")
