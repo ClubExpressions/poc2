@@ -1,14 +1,26 @@
 (ns simple.core
-  (:require [reagent.core :as reagent]
+  (:require [clojure.string :as string]
+            [clojure.walk :refer [keywordize-keys]]
+            [reagent.core :as reagent]
             [re-frame.core :as rf]
             [re-frame.db :refer [app-db]]
             [goog.object :refer [getValueByKeys]]
+            [goog.events :as events]
             [webpack.bundle]
-            [cljs.pprint :refer [pprint]]))
+            [cljs.pprint :refer [pprint]])
+  (:import  [goog History]
+            [goog.history EventType]))
 
 (def debug?
   ^boolean goog.DEBUG)
 (enable-console-print!)
+
+; Install the navigation: listen to NAVIGATE events and dispatch to :nav
+(def history
+  (doto (History.)
+    (events/listen EventType.NAVIGATE
+                   (fn [event] (rf/dispatch [:nav (.-token event)])))
+    (.setEnabled true)))
 
 ;; A detailed walk-through of this source code is provied in the docs:
 ;; https://github.com/Day8/re-frame/blob/master/docs/CodeWalkthrough.md
@@ -25,6 +37,7 @@
     ;(if true
     (if (empty? db)
       {:authenticated false
+       :current-page :landing
        :latex-src "(Somme 2 2)"
        :history-count 0}
       db)))
@@ -34,6 +47,21 @@
   (fn [_ [_ [kw error]]]
     (println (str "ERROR!!!1! in " kw))
     (println (with-out-str (pprint error)))))
+
+(rf/reg-event-fx
+  :nav
+  (fn [{:keys [db]} [_]]
+    (let [url (-> js/window .-location .-href)
+          after-hash (get (string/split url "#/") 1)
+          after-hash-splitted (string/split after-hash "?")
+          before-qmark (get after-hash-splitted 0)
+          page (keyword (if (empty? before-qmark) "landing" before-qmark))
+          after-qmark (get after-hash-splitted 1)
+          array (filter (complement #(some #{%} ["&" "=" ""]))
+                  (string/split after-qmark #"(&|=)"))
+          query-params (keywordize-keys (apply hash-map array))
+          ]
+      {:db (assoc db :current-page page)})))
 
 (rf/reg-event-fx
   :login
@@ -166,6 +194,14 @@
 (def bs-row  (getValueByKeys react-bootstrap "Row"))
 (def bs-col  (getValueByKeys react-bootstrap "Col"))
 
+(defn nav-controls
+  []
+  [:div.pull-right
+   [:ul.nav
+    [:li [:a {:href "#/"} "Accueil"]]
+    [:li [:a {:href "#/profile"} "Profil"]]]
+   ])
+
 (defn login-link
   []
   [:a {:on-click #(rf/dispatch [:login])}
@@ -213,6 +249,7 @@
     (when false [:pre (with-out-str (pprint @app-db))])
     [:div.pull-right
       (if @(rf/subscribe [:authenticated]) [logout-link] [login-link])]
+    [:div.pull-right [nav-controls]]
     [:> bs-grid
       [:> bs-row
         [:> bs-col {:xs 6 :md 6}
