@@ -51,19 +51,20 @@
 (rf/reg-event-fx
   :nav
   (fn [{:keys [db]} [_]]
-    (let [url (-> js/window .-location .-href)
-          after-hash (get (string/split url "#/") 1)
-          after-hash-splitted (string/split after-hash "?")
-          before-qmark (get after-hash-splitted 0)
-          page (keyword (if (empty? before-qmark) "landing" before-qmark))
-          after-qmark (get after-hash-splitted 1)
-          array (filter (complement #(some #{%} ["&" "=" ""]))
-                  (string/split after-qmark #"(&|=)"))
-          query-params (keywordize-keys (apply hash-map array))
-          new-db (assoc db :current-page page)
-          cofx (if (= :auth page) {:auth query-params} {})
-          ]
-      (merge {:db new-db} cofx))))
+    (if (empty? db) db
+      (let [url (-> js/window .-location .-href)
+            after-hash (get (string/split url "#/") 1)
+            after-hash-splitted (string/split after-hash "?")
+            before-qmark (get after-hash-splitted 0)
+            page (keyword (if (empty? before-qmark) "landing" before-qmark))
+            after-qmark (get after-hash-splitted 1)
+            array (filter (complement #(some #{%} ["&" "=" ""]))
+                    (string/split after-qmark #"(&|=)"))
+            query-params (keywordize-keys (apply hash-map array))
+            new-db (assoc db :current-page page)
+            cofx (if (= :auth page) {:auth query-params} {})
+            ]
+        (merge {:db new-db} cofx)))))
 
 (rf/reg-event-fx
   :login
