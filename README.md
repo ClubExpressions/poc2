@@ -98,7 +98,8 @@ Some notes taken below.
 
 #### Local kinto
 
-There's a `kinto.ini` in the repo, just do `kinto start --ini kinto.ini`.
+There are some `kinto.ini` files in the repo, just do  
+`kinto start --ini kinto_XXX.ini`.
 
 #### Official test instance
 
