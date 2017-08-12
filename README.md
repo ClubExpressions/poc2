@@ -44,6 +44,8 @@ See the running app here:
   * [CodeMirror](https://www.npmjs.com/package/react-codemirror) (text editor)
 * Modules that are planned to be used:
   * [Tempura](https://github.com/ptaoussanis/tempura) (i18n)
+  * [re-learn](https://github.com/oliyh/re-learn) (quick interactive tuto for
+    users)
 
 ## Dev setup
 
