@@ -86,8 +86,8 @@ The dev build points to <http://localhost:8887/v1> and the prod build to
 
 in `project.clj` whose value is in turn stored in the `debug?` var).
 
-Our own instance will be live
-[soonish](https://github.com/Kinto/kinto-alwaysdata/issues/created_by/grahack).
+Our own instance is live [here](https://kinto.expressions.club/v1/).
+
 Some notes taken below.
 
 #### General instructions to install the Kinto server
