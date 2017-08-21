@@ -124,7 +124,7 @@
 
 (def sync-options
   (let [b64 (js/window.btoa "user:pass")
-        url (if debug? "http://localhost:8887/v1"
+        url (if debug? "https://expressions.club.local/v1"
                        "https://kinto.dev.mozaws.net/v1")] ; a real one soon
     (clj->js {:remote url
               :headers {:Authorization (str "Basic " b64)}})))

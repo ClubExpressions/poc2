@@ -62,25 +62,40 @@ It reads the `project.clj` lying at the root dir of the project.
 
 `git clone git@github.com:ClubExpressions/poc2.git`
 
+### Docker
+
+Install Docker Community Edition with official guide: https://docs.docker.com/engine/installation/
+
+Them install Docker Compose: https://docs.docker.com/compose/install/
+
+### Host
+
+Edit your `/etc/hosts` file and add:
+
+  127.0.0.1   expressions.club.local
+
+Save and quit.
+
 ### Dev build and source watch
 
 1. `cd` to the root of this project (where this README exists)
-2. run `lein do clean, figwheel`  to compile the app and start up
+2. Run Postgresql and Kinto at one: `docker-compose up`
+3. In another terminal, run `lein do clean, figwheel`  to compile the app and start up
    figwheel hot-reloading,
-3. open `http://localhost:3449/` to see the app
+4. Open `https://expressions.club.local/` to see the app (accept the self-signed certificate forever)
 
-While step 2 is running, any changes you make to the ClojureScript
+While step 3 is running, any changes you make to the ClojureScript
 source files (in `src`) will be re-compiled and reflected in the running
 page immediately.
 
-### kinto
+### Kinto
 
 Client side, we use the official npm package
 [kinto](https://www.npmjs.com/package/kinto) (instead of the other official
 [kinto-http](https://www.npmjs.com/package/kinto-http)).
 
-The dev build points to <http://localhost:8887/v1> and the prod build to
-<https://kinto.dev.mozaws.net/v1> (thanks to
+The dev build points to `https://expressions.club.local/v1` and the prod build to
+`https://kinto.dev.mozaws.net/v1` (thanks to
 
     :closure-defines {goog.DEBUG false}
 
@@ -88,9 +103,7 @@ in `project.clj` whose value is in turn stored in the `debug?` var).
 
 Our own instance is live [here](https://kinto.expressions.club/v1/).
 
-Some notes taken below.
-
-#### General instructions to install the Kinto server
+#### General instructions to install the Kinto server without Docker
 
 * `sudo apt-get install python3-dev`
 * `sudo pip3 install kinto`
@@ -123,16 +136,7 @@ but encountered
 
 #### Kinto admin (like phpMyAdmin)
 
-[Project page](https://github.com/Kinto/kinto-admin)
-
-* first instructions (create a React app)
-  [don't work](https://github.com/Kinto/kinto-admin/issues/446)
-* I just did:
-  * `git clone https://github.com/Kinto/kinto-admin.git`
-  * `cd kinto-admin`
-  * `npm install`
-  * `npm start`
-  * then had a look at <http://localhost:3000>.
+Go to https://kinto.github.io/kinto-admin/, them configure your Kinto instance (dev or prod instance).
 
 ## Dev notes
 

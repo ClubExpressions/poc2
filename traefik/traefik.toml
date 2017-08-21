@@ -1,0 +1,49 @@
+defaultEntryPoints = ["http", "https"]
+logLevel = "ERROR"
+
+[web]
+# Port for the status page
+address = ":8080"
+
+# Entrypoints, http and https
+[entryPoints]
+  # http should be redirected to https
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  # https is the default
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      CertFile = "/etc/traefik/expressions.club.local.pem"
+      KeyFile = "/etc/traefik/expressions.club.local.key"
+
+[frontends]
+  [frontends.www]
+  backend = "figwheel"
+    [frontends.www.routes.www]
+    rule = "Host:expressions.club.local"
+  [frontends.api]
+  backend = "kinto"
+    [frontends.api.routes.api]
+    rule = "Host:expressions.club.local;PathPrefix: /v{version:[0-9]+}"
+
+# Enable Docker configuration backend
+[docker]
+  endpoint = "unix:///var/run/docker.sock"
+  domain = "expressions.club"
+  watch = true
+  exposedbydefault = false
+
+[file]
+
+# rules
+[backends]
+  [backends.figwheel]
+    [backends.figwheel.servers.server1]
+    url = "http://172.17.0.1:3449"
+  [backends.kinto]
+    [backends.kinto.servers.server1]
+    url = "http://kinto:8888"
