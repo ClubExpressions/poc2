@@ -79,7 +79,7 @@ Save and quit.
 ### Dev build and source watch
 
 1. `cd` to the root of this project (where this README exists)
-2. Run Postgresql and Kinto at one: `docker-compose up`
+2. Run Postgresql and Kinto at once: `docker-compose up`
 3. In another terminal, run `lein do clean, figwheel`  to compile the app and start up
    figwheel hot-reloading,
 4. Open `https://expressions.club.local/` to see the app (accept the self-signed certificate forever)
@@ -136,7 +136,7 @@ but encountered
 
 #### Kinto admin (like phpMyAdmin)
 
-Go to https://kinto.github.io/kinto-admin/, them configure your Kinto instance (dev or prod instance).
+Go to https://kinto.github.io/kinto-admin/, then configure your Kinto instance (dev or prod instance).
 
 ## Dev notes
 
