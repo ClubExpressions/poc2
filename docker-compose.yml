@@ -1,5 +1,7 @@
 postresql:
   image: postgres:alpine
+  volumes:
+    - ./pg-data:/var/lib/postgresql
   environment:
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: postgres
@@ -18,12 +20,13 @@ kinto:
     KINTO_PERMISSION_URL: postgres://postgres:postgres@postresql/postgres
   volumes:
     - ./kinto:/etc/kinto
+    - ../kinto-github-token/kinto_github_token:/code/kinto_github_token
+    - ../kinto-auth0-openid-connect/kinto_auth0_openid_connect:/code/kinto_auth0_openid_connect
 traefik:
   image: traefik
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
     - ./traefik/:/etc/traefik/:ro
-    - ./traefik/acme:/etc/traefik/acme
   ports:
     - "80:80"
     - "443:443"
