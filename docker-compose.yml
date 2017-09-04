@@ -20,8 +20,9 @@ kinto:
     KINTO_PERMISSION_URL: postgres://postgres:postgres@postresql/postgres
   volumes:
     - ./kinto:/etc/kinto
-    - ../kinto-github-token/kinto_github_token:/code/kinto_github_token
     - ../kinto-auth0-openid-connect/kinto_auth0_openid_connect:/code/kinto_auth0_openid_connect
+    - ${HOME}/.local/lib/python3.5/site-packages/jose:/code/jose
+    - ${HOME}/.local/lib/python3.5/site-packages/ecdsa:/code/ecdsa
 traefik:
   image: traefik
   volumes:
