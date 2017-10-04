@@ -1,36 +1,42 @@
-postresql:
-  image: postgres:alpine
-  volumes:
-    - ./pg-data:/var/lib/postgresql
-  environment:
-    POSTGRES_USER: postgres
-    POSTGRES_PASSWORD: postgres
-kinto:
-  image: kinto/kinto-server
-  links:
-   - postresql
-  ports:
-   - "8888:8888"
-  environment:
-    KINTO_CACHE_BACKEND: kinto.core.cache.postgresql
-    KINTO_CACHE_URL: postgres://postgres:postgres@postresql/postgres
-    KINTO_STORAGE_BACKEND: kinto.core.storage.postgresql
-    KINTO_STORAGE_URL: postgres://postgres:postgres@postresql/postgres
-    KINTO_PERMISSION_BACKEND: kinto.core.permission.postgresql
-    KINTO_PERMISSION_URL: postgres://postgres:postgres@postresql/postgres
-  volumes:
-    - ./kinto:/etc/kinto
-    - ../kinto-auth0-openid-connect/kinto_auth0_openid_connect:/code/kinto_auth0_openid_connect
-    - ${HOME}/.local/lib/python3.5/site-packages/jose:/code/jose
-    - ${HOME}/.local/lib/python3.5/site-packages/ecdsa:/code/ecdsa
-traefik:
-  image: traefik
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock:ro
-    - ./traefik/:/etc/traefik/:ro
-  ports:
-    - "80:80"
-    - "443:443"
-    - "8080:8080"
-  links:
-    - kinto
+version: "3"
+
+services:
+
+  postresql:
+    image: postgres:alpine
+    volumes:
+      - ./pg-data:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  kinto:
+    image: kinto/kinto-server
+    links:
+    - postresql
+    ports:
+    - "8888:8888"
+    environment:
+      KINTO_CACHE_BACKEND: kinto.core.cache.postgresql
+      KINTO_CACHE_URL: postgres://postgres:postgres@postresql/postgres
+      KINTO_STORAGE_BACKEND: kinto.core.storage.postgresql
+      KINTO_STORAGE_URL: postgres://postgres:postgres@postresql/postgres
+      KINTO_PERMISSION_BACKEND: kinto.core.permission.postgresql
+      KINTO_PERMISSION_URL: postgres://postgres:postgres@postresql/postgres
+    volumes:
+      - ./kinto:/etc/kinto
+      - ../kinto-auth0-openid-connect/kinto_auth0_openid_connect:/code/kinto_auth0_openid_connect
+      - ${HOME}/.local/lib/python3.5/site-packages/jose:/code/jose
+      - ${HOME}/.local/lib/python3.5/site-packages/ecdsa:/code/ecdsa
+
+  traefik:
+    image: traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/:/etc/traefik/:ro
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    links:
+      - kinto
