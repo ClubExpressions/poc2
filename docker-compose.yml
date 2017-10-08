@@ -5,15 +5,17 @@ services:
   postresql:
     image: postgres:alpine
     volumes:
-      - ./pg-data:/var/lib/postgresql
+# Doesn't work yet
+#      - ./docker/pg-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
 
   kinto:
-    image: kinto/kinto-server
+    build: ./docker/kinto-club
     links:
     - postresql
+#    - clubexpressions.eu.auth0.com
     ports:
     - "8888:8888"
     environment:
@@ -25,18 +27,20 @@ services:
       KINTO_PERMISSION_URL: postgres://postgres:postgres@postresql/postgres
     volumes:
       - ./kinto:/etc/kinto
-      - ../kinto-auth0-openid-connect/kinto_auth0_openid_connect:/code/kinto_auth0_openid_connect
-      - ${HOME}/.local/lib/python3.5/site-packages/jose:/code/jose
-      - ${HOME}/.local/lib/python3.5/site-packages/ecdsa:/code/ecdsa
 
   traefik:
     image: traefik
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik/:/etc/traefik/:ro
+      - ./docker/traefik/:/etc/traefik/:ro
     ports:
       - "80:80"
       - "443:443"
       - "8080:8080"
     links:
       - kinto
+
+#  clubexpressions.eu.auth0.com:
+#    image: httpd:alpine
+#    volumes:
+#      - ./docker/clubexpressions.eu.auth0.com:/usr/local/apache2/htdocs
