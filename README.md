@@ -68,25 +68,23 @@ Install Docker Community Edition with official guide: https://docs.docker.com/en
 
 Them install Docker Compose: https://docs.docker.com/compose/install/
 
-### Host
-
-Edit your `/etc/hosts` file and add:
-
-  127.0.0.1   expressions.club.local
-
-Save and quit.
-
 ### Dev build and source watch
 
 1. `cd` to the root of this project (where this README exists)
 2. Run Postgresql and Kinto at once: `docker-compose up`
 3. In another terminal, run `lein do clean, figwheel`  to compile the app and start up
    figwheel hot-reloading,
-4. Open `https://expressions.club.local/` to see the app (accept the self-signed certificate forever)
+4. Open `http://localhost:3449/` to see the app
 
 While step 3 is running, any changes you make to the ClojureScript
 source files (in `src`) will be re-compiled and reflected in the running
 page immediately.
+
+# Auth0 authentication dance
+
+1. Go to http://localhost:8888/v1/auth/auth0
+2. Follow authentication process
+3. Go back to the application with JWT token in query string
 
 ### Kinto
 
@@ -94,7 +92,7 @@ Client side, we use the official npm package
 [kinto](https://www.npmjs.com/package/kinto) (instead of the other official
 [kinto-http](https://www.npmjs.com/package/kinto-http)).
 
-The dev build points to `https://expressions.club.local/v1` and the prod build to
+The dev build points to `http://localhost:8888/v1` and the prod build to
 `https://kinto.dev.mozaws.net/v1` (thanks to
 
     :closure-defines {goog.DEBUG false}

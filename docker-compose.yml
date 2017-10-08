@@ -28,17 +28,17 @@ services:
     volumes:
       - ./kinto:/etc/kinto
 
-  traefik:
-    image: traefik
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./docker/traefik/:/etc/traefik/:ro
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-    links:
-      - kinto
+#  traefik:
+#    image: traefik
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock:ro
+#      - ./docker/traefik/:/etc/traefik/:ro
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#      - "8080:8080"
+#    links:
+#      - kinto
 
 #  clubexpressions.eu.auth0.com:
 #    image: httpd:alpine
