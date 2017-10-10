@@ -1,6 +1,6 @@
 FROM kinto/kinto-server
 
-ENV KINTO_AUTH0_PLUGIN_VERSION=c5f0462
+ENV KINTO_AUTH0_PLUGIN_VERSION=1151a5a
 
 # Uncomment for pluhin development
 #COPY kinto-auth0-openid-connect /kinto-auth0-openid-connect
